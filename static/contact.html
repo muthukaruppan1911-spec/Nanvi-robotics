@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="icon" type="image/png" href="images/favicon.png?v=20261105d">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact Nanvi Robotics</title>
+  <link rel="stylesheet" href="site.css?v=20261105d">
+</head>
+
+<body>
+  <main class="page-wrap">
+    <section class="page-hero">
+      <div>
+        <span class="eyebrow">Let's build something useful</span>
+        <h1>Tell us about your <span>robotics project</span></h1>
+        <p class="lead">Share the task you want to automate or the challenge you are trying to solve. The Nanvi team
+          will get back to you directly.</p>
+      </div>
+      <div class="media-frame">
+        <img src="images/Gemini_Generated_Image_3tdiin3tdiin3tdi.webp"
+          alt="Nanvi Event Bot welcoming clients and visitors">
+      </div>
+    </section>
+
+    <section class="content-section" id="contact-section">
+      <span class="eyebrow">Contact us</span>
+      <h2>What would you like to <span>build?</span></h2>
+      <p class="sub">Fill out the form below and we will respond to your email promptly.</p>
+
+      <form class="contact-form" id="contact-form" novalidate>
+        <!-- Honeypot anti-spam trap (invisible to human users) -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="contact-website">Website URL (leave blank)</label>
+          <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <!-- Full Name -->
+        <div class="form-group">
+          <label for="contact-name">Full Name * <span class="req" aria-hidden="true"> </span></label>
+          <input id="contact-name" name="name" type="text" maxlength="100" autocomplete="name" placeholder="e.g. John Doe" required
+            aria-describedby="err-name">
+          <span class="field-error" id="err-name" role="alert" aria-live="polite"></span>
+        </div>
+
+        <!-- Email Address -->
+        <div class="form-group">
+          <label for="contact-email">Email Address *<span class="req" aria-hidden="true"> </span></label>
+          <input id="contact-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="e.g. john@example.com"
+            required aria-describedby="err-email">
+          <span class="field-error" id="err-email" role="alert" aria-live="polite"></span>
+        </div>
+
+        <!-- Subject -->
+        <div class="form-group">
+          <label for="contact-subject">Subject *<span class="req" aria-hidden="true"> </span></label>
+          <input id="contact-subject" name="subject" type="text" maxlength="150" placeholder="e.g. Product Enquiry / Agri Bot Pilot"
+            required aria-describedby="err-subject">
+          <span class="field-error" id="err-subject" role="alert" aria-live="polite"></span>
+        </div>
+
+        <!-- Message -->
+        <div class="form-group">
+          <label for="contact-message">Message *<span class="req" aria-hidden="true"> </span></label>
+          <textarea id="contact-message" name="message" rows="5" maxlength="5000"
+            placeholder="Tell us about your automation needs, facility details, or pilot timeline..." required
+            aria-describedby="err-message"></textarea>
+          <span class="field-error" id="err-message" role="alert" aria-live="polite"></span>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-actions">
+          <button type="submit" id="contact-submit" class="contact-submit-btn">
+            <span class="btn-text">Send Message</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <!-- Alert Notification (Success / Error) -->
+        <div id="contact-alert" class="form-alert" role="alert" aria-live="polite" hidden></div>
+      </form>
+    </section>
+  </main>
+  <script src="site.js?v=20261105d"></script>
+</body>
+
+</html>

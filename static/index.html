@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/png" href="images/favicon.png?v=20261105d">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nanvi – AI Robotics</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:70px;scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+
+.hero{background:#06202a;position:relative;width:100%;max-width:100%!important;margin:0!important;min-height:calc(100vh - 70px);min-height:calc(100dvh - 70px);display:flex;align-items:center;justify-content:center;text-align:center;padding:60px clamp(16px,3.5vw,36px);overflow:hidden;box-sizing:border-box}
+.hero-video{position:absolute;top:50%;left:50%;width:100%;height:100%;min-width:100%;min-height:100%;transform:translate(-50%,-50%);object-fit:cover;object-position:center;z-index:0;pointer-events:none}
+.hero-overlay{position:absolute;inset:0;width:100%;height:100%;background:linear-gradient(180deg,rgba(6,32,42,.72) 0%,rgba(6,32,42,.54) 45%,rgba(6,32,42,.92) 100%);z-index:1;pointer-events:none}
+#bg{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.hero-content{position:relative;z-index:3;max-width:880px;width:100%;margin:0 auto}
+.tag{display:inline-block;padding:5px 16px;border:1px solid rgba(56,189,248,.7);color:#38bdf8;background:rgba(6,32,42,.65);backdrop-filter:blur(8px);border-radius:99px;font-size:.84rem;margin-bottom:18px}
+h1{font-size:clamp(2.3rem,5.5vw,4.2rem);line-height:1.15;margin:0 0 16px;color:#fff;text-shadow:0 3px 20px rgba(0,0,0,.7);word-break:keep-all}
+h1 span,h2 span{background:linear-gradient(90deg,#38bdf8,#86efac);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-content h1 span{white-space:nowrap}
+.hero p{color:#e2e8f0;font-size:clamp(1rem,2vw,1.18rem);text-shadow:0 1px 10px rgba(0,0,0,.7);margin:0 auto 28px;max-width:740px;line-height:1.7}
+.hero-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:0 auto}
+.btn{display:inline-block;padding:12px 26px;border-radius:10px;background:var(--a);color:#fff;text-decoration:none;font-weight:600;border:0;cursor:pointer;font-size:1rem;box-shadow:0 4px 18px rgba(0,101,131,.45);transition:.2s}
+.btn:hover{background:#159bb3;transform:translateY(-2px)}
+.btn.o{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.45);color:#fff;backdrop-filter:blur(8px)}
+.btn.o:hover{background:rgba(255,255,255,.25);border-color:#fff}
+.hero-ctrl{position:absolute;bottom:16px;right:20px;z-index:4;background:rgba(6,32,42,.7);border:1px solid rgba(255,255,255,.3);color:#e2e8f0;padding:5px 14px;border-radius:99px;font-size:.8rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;backdrop-filter:blur(8px);transition:.2s}
+.hero-ctrl:hover{background:rgba(6,32,42,.95);border-color:#38bdf8;color:#fff}
+section:not(.hero){padding:70px clamp(16px,3.5vw,36px);max-width:1240px;width:100%;margin:0 auto;box-sizing:border-box}
+h2{font-size:clamp(1.7rem,4vw,2.5rem);margin:0 0 8px}
+.sub{color:var(--muted);margin:0 0 36px;max-width:640px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-top:-30px;position:relative}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
+.stat b{font-size:2rem;color:var(--a);display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;padding:0;transition:.25s ease}
+.card:hover{transform:translateY(-5px);border-color:var(--a);box-shadow:0 12px 30px rgba(0,101,131,.1)}
+.card img{display:block;width:100%;aspect-ratio:16/10;height:auto;object-fit:cover;transition:transform .35s ease}
+.card:hover img{transform:scale(1.04)}
+.card-copy{padding:18px 20px 22px}
+.card h3{margin:0 0 6px}.card p{color:var(--muted);margin:0;font-size:.95rem}
+.demo{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;margin-bottom:56px}
+.demo:nth-child(even) .scr{order:2}
+@media(max-width:760px){.demo{grid-template-columns:1fr}.demo:nth-child(even) .scr{order:0}}
+.scr{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#06202a;box-shadow:0 10px 40px rgba(34,211,238,.12)}
+.scr canvas{display:block;width:100%;height:auto}
+.rec{position:absolute;top:10px;left:12px;color:#fff;font:600 .75rem monospace;display:flex;gap:6px;align-items:center}
+.rec i{width:8px;height:8px;border-radius:50%;background:#ef4444;animation:bl 1s infinite}
+@keyframes bl{50%{opacity:.2}}
+.pp{position:absolute;bottom:10px;right:10px;background:#0009;color:#fff;border:1px solid #fff4;border-radius:8px;padding:4px 12px;cursor:pointer}
+.demo h3{font-size:1.5rem;margin:0 0 8px}.demo p{color:var(--muted)}
+.demo ul{color:var(--muted);padding-left:18px}
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.gal div{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--card)}
+.gal svg{width:100%;height:auto;display:block}
+.gal span{display:block;padding:10px 14px;color:var(--muted);font-size:.9rem}
+form{display:grid;gap:12px;max-width:520px}
+input,textarea{padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit}
+footer{text-align:center;padding:30px;color:var(--muted);border-top:1px solid var(--line)}
+@keyframes fl{50%{transform:translateY(-8px)}}.fl{animation:fl 3s ease-in-out infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+<link rel="stylesheet" href="site.css?v=20261105d">
+</head>
+<body>
+<section class="hero">
+<video class="hero-video" autoplay muted loop playsinline preload="auto" poster="images/thumbs/agri_5s.jpg">
+<source src="images/Agri_Bot_removing_weeds_6ec8019a.mp4" type="video/mp4">
+</video>
+<div class="hero-overlay"></div>
+<canvas id="bg"></canvas>
+<div class="hero-content">
+<h1>Robotics that solve <span>real-world challenges</span></h1>
+<p>Nanvi is developing four robotics solutions for smart agriculture, disability assistance, industrial automation, and events and hospitality—connected by a shared robotics intelligence platform.</p>
+<div class="hero-actions">
+<a class="btn" href="#live">Watch Robots in Action</a>
+<a class="btn o" href="#robot-portfolio">Explore Solutions</a>
+<a class="btn o" href="#contact">Request a Demo</a>
+</div>
+</div>
+<button type="button" class="hero-ctrl" id="heroVidBtn" aria-label="Pause or play background video">
+<span id="heroVidIcon">⏸</span> <span id="heroVidText">Pause Video</span>
+</button>
+</section>
+
+<section class="content-section home-gallery"><span class="eyebrow">Nanvi AI Robotics</span><h2>Intelligent machines in the <span>real world</span></h2><div class="home-gallery-grid">
+<figure class="gallery-card"><img src="images/Gemini_Generated_Image_2xrz542xrz542xrz.webp" alt="Agri Bot autonomous weeding rover in tea plantation" loading="lazy"><figcaption>Agri Bot · Smart Agriculture</figcaption></figure>
+<figure class="gallery-card"><img src="images/Gemini_Generated_Image_bs3agwbs3agwbs3a.webp" alt="Care Bot assisting patient in healthcare center" loading="lazy"><figcaption>Care Bot · Disability Assistance</figcaption></figure>
+<figure class="gallery-card"><img src="images/Gemini_Generated_Image_peotd5peotd5peot.webp" alt="Indus Bot precision vision inspection on conveyor" loading="lazy"><figcaption>Indus Bot · Industrial Automation</figcaption></figure>
+<figure class="gallery-card"><img src="images/Gemini_Generated_Image_3tdiin3tdiin3tdi.webp" alt="Event Bot welcoming and checking in conference visitors" loading="lazy"><figcaption>Event Bot · Events &amp; Hospitality</figcaption></figure>
+</div></section>
+
+<section><div class="stats">
+<div class="stat"><b data-n="2">0</b> Global Offices</div>
+<div class="stat"><b data-n="4">0</b> Robotics solutions</div>
+<div class="stat"><b data-n="24/7">0</b> Support</div>
+<div class="stat"><b data-n="100%">0</b> Innovation driven</div></div></section>
+
+<section id="solutions"><h2>Our <span>AI Robotics</span> Solutions</h2><p class="sub">Four core technologies power every Nanvi robot.</p>
+<div class="grid">
+<article class="card"><img src="images/Gemini_Generated_Image_peotd5peotd5peot.webp" alt="Computer vision AI analyzing visual defect data on conveyor" loading="lazy" decoding="async"><div class="card-copy"><h3>Computer Vision</h3><p>Deep-learning models detect, classify and inspect objects in real time, even in cluttered scenes.</p></div></article>
+<article class="card"><img src="images/Gemini_Generated_Image_2xrz542xrz542xrz.webp" alt="Autonomous mobile robot navigating plantation terrain with LiDAR SLAM" loading="lazy" decoding="async"><div class="card-copy"><h3>Autonomous Navigation</h3><p>SLAM mapping and path planning let mobile robots move safely around people and obstacles.</p></div></article>
+<article class="card"><img src="images/thumbs/agri_5s.jpg" alt="Precision articulated robotic arm and gripper manipulating tea leaves" loading="lazy" decoding="async"><div class="card-copy"><h3>Robotic Manipulation</h3><p>Precision arms with inverse kinematics and reinforcement learning for picking, assembly and weeding.</p></div></article>
+<article class="card"><img src="images/Gemini_Generated_Image_bs3agwbs3agwbs3a.webp" alt="Humanoid assistance robot working alongside people" loading="lazy" decoding="async"><div class="card-copy"><h3>Human–Robot Interaction</h3><p>Natural language, gesture recognition and intuitive interfaces so anyone can work alongside our robots.</p></div></article>
+</div></section>
+
+<section class="content-section" id="robot-portfolio"><span class="eyebrow">Our four robotics solutions</span><h2>Robots made for <span>real-world challenges</span></h2><p class="sub">Each solution uses Nanvi’s shared AI, vision, navigation, and monitoring capabilities, tailored to its industry.</p>
+<div class="project-grid">
+<article class="project-card">
+  <div class="media-frame project-image">
+    <video autoplay muted loop playsinline preload="none" poster="images/Gemini_Generated_Image_2xrz542xrz542xrz.webp">
+      <source src="images/Agri_Bot_removing_weeds_6ec8019a.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="project-card-copy">
+    <span class="service-number">SMART AGRICULTURE</span>
+    <h3>Agri Bot</h3>
+    <p>Designed to identify and remove weeds in tea estates while protecting tea plants, with terrain-aware navigation for sloping gardens.</p>
+    <a href="projects.html#portfolio">Explore Agri Bot</a>
+  </div>
+</article>
+<article class="project-card">
+  <div class="media-frame project-image">
+    <video autoplay muted loop playsinline preload="none" poster="images/Gemini_Generated_Image_bs3agwbs3agwbs3a.webp">
+      <source src="images/Robot_assisting_person_in_room_88a9ff2e.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="project-card-copy">
+    <span class="service-number">DISABILITY ASSISTANCE</span>
+    <h3>Care Bot</h3>
+    <p>Designed to support independence with simple interaction, small-item fetching, reminders, caregiver alerts, and indoor navigation.</p>
+    <a href="projects.html#portfolio">Explore Care Bot</a>
+  </div>
+</article>
+<article class="project-card">
+  <div class="media-frame project-image">
+    <video autoplay muted loop playsinline preload="none" poster="images/Gemini_Generated_Image_peotd5peotd5peot.webp">
+      <source src="images/Industrial_robot_inspecting_conv_8aa3c077.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="project-card-copy">
+    <span class="service-number">INDUSTRIAL AUTOMATION</span>
+    <h3>Indus Bot</h3>
+    <p>Designed for visual inspection, defect detection, lightweight material movement, and machine-status monitoring.</p>
+    <a href="projects.html#portfolio">Explore Indus Bot</a>
+  </div>
+</article>
+<article class="project-card">
+  <div class="media-frame project-image">
+    <video autoplay muted loop playsinline preload="none" poster="images/Gemini_Generated_Image_3tdiin3tdiin3tdi.webp">
+      <source src="images/Robot_welcoming_exhibition_visitor_29590a0d.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="project-card-copy">
+    <span class="service-number">EVENTS &amp; HOSPITALITY</span>
+    <h3>Event Bot</h3>
+    <p>Designed to greet guests, assist with check-in and wayfinding, and share information at events and hospitality venues.</p>
+    <a href="projects.html#portfolio">Explore Event Bot</a>
+  </div>
+</article>
+</div>
+<p class="portfolio-note">Product descriptions represent Nanvi’s portfolio direction. Live video captures demonstrate autonomous testing and robotic capabilities.</p>
+<p class="safety-note"><strong>Care Bot safety:</strong> It is assistance-only; it does not lift or transfer people, administer medication, or make medical decisions. Clinical care remains with qualified professionals.</p>
+<a class="btn" href="projects.html#portfolio">Explore all robotics solutions</a></section>
+
+<section id="live"><h2>Robots in <span>Action</span></h2><p class="sub">Live simulations running in your browser – these are real-time AI concepts, not recordings.</p>
+
+<div class="demo"><div class="scr"><canvas id="c1" width="640" height="400"></canvas><div class="rec"><i></i>CAM 01 · VISION</div><button class="pp">Pause</button></div>
+<div><h3>Computer Vision Inspection</h3><p>A conveyor line is scanned frame by frame. The AI draws bounding boxes, labels each part and flags defects instantly.</p><ul><li>Object detection &amp; classification</li><li>Defect and quality inspection</li><li>Works at conveyor speed</li></ul></div></div>
+
+<div class="demo"><div class="scr"><canvas id="c2" width="640" height="400"></canvas><div class="rec"><i></i>NAV · TAP TO SET GOAL</div><button class="pp">Pause</button></div>
+<div><h3>Autonomous Path Planning</h3><p>The robot computes the shortest collision-free route through the map. <b>Click or tap anywhere</b> on the screen to send it to a new goal.</p><ul><li>Grid-based path search</li><li>Dynamic obstacle avoidance</li><li>Warehouse &amp; hospital logistics</li></ul></div></div>
+
+<div class="demo"><div class="scr"><canvas id="c3" width="640" height="400"></canvas><div class="rec"><i></i>ARM · INVERSE KINEMATICS</div><button class="pp">Pause</button></div>
+<div><h3>Robotic Arm Control</h3><p>A two-joint arm solves inverse kinematics every frame to follow a moving target with smooth, precise motion.</p><ul><li>Pick-and-place &amp; assembly</li><li>Sub-millimetre repeatability</li><li>Move the mouse over the screen to guide it</li></ul></div></div>
+</section>
+
+
+<section id="contact"><h2>Let's build your <span>robot</span></h2><p class="sub">Tell us about your project and the Nanvi team will get back to you.</p>
+<form id="f"><input required placeholder="Your name"><input required type="email" placeholder="Email"><textarea rows="4" placeholder="What would you like to automate?"></textarea><button class="btn" type="submit">Send Request</button><p id="ok" style="color:var(--a)" role="status" aria-live="polite"></p><input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0"></form></section>
+
+<script>
+const dark="#06202a",cy="#2fb4d6",vi="#9bd23c";
+// Hero background video play/pause controller
+const heroVid = document.querySelector(".hero-video");
+const heroVidBtn = document.getElementById("heroVidBtn");
+const heroVidIcon = document.getElementById("heroVidIcon");
+const heroVidText = document.getElementById("heroVidText");
+if (heroVid && heroVidBtn) {
+  heroVidBtn.addEventListener("click", () => {
+    if (heroVid.paused) {
+      heroVid.play();
+      heroVidIcon.textContent = "⏸";
+      heroVidText.textContent = "Pause Video";
+    } else {
+      heroVid.pause();
+      heroVidIcon.textContent = "▶";
+      heroVidText.textContent = "Play Video";
+    }
+  });
+  heroVid.play().catch(() => {});
+}
+// hero particle network
+(function(){const c=document.getElementById("bg"),x=c.getContext("2d");let W,H,P=[];
+function rs(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;P=Array.from({length:Math.min(70,W/14)},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.6,vy:(Math.random()-.5)*.6}))}
+rs();addEventListener("resize",rs);
+(function f(){x.clearRect(0,0,W,H);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;x.fillStyle=cy;x.globalAlpha=.7;x.beginPath();x.arc(p.x,p.y,2,0,7);x.fill()});
+for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const d=Math.hypot(P[i].x-P[j].x,P[i].y-P[j].y);if(d<130){x.globalAlpha=(1-d/130)*.35;x.strokeStyle=vi;x.beginPath();x.moveTo(P[i].x,P[i].y);x.lineTo(P[j].x,P[j].y);x.stroke()}}requestAnimationFrame(f)})()})();
+// counters
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target,match=el.dataset.n.match(/^(\d+)(.*)$/);if(!match){el.textContent=el.dataset.n;io.unobserve(el);return}const n=Number(match[1]),suffix=match[2];let i=0;const t=setInterval(()=>{i++;el.textContent=`${Math.round(n*i/40)}${suffix}`;if(i>=40)clearInterval(t)},30);io.unobserve(el)}}));
+document.querySelectorAll("[data-n]").forEach(e=>io.observe(e));
+// clip runner
+const clips=[];
+function clip(id,draw){const c=document.getElementById(id),x=c.getContext("2d"),b=c.parentNode.querySelector(".pp");const o={play:true};
+b.onclick=()=>{o.play=!o.play;b.textContent=o.play?"Pause":"Play"};
+let t=0;(function f(){if(o.play){t+=1;draw(x,t,o)}requestAnimationFrame(f)})();return c}
+// 1 vision
+const objs=Array.from({length:5},(_,i)=>({x:i*150,k:i%3,bad:i==3,y:210+(i%2)*20}));
+clip("c1",(x,t)=>{x.fillStyle=dark;x.fillRect(0,0,640,400);x.fillStyle="#1e293b";x.fillRect(0,250,640,70);
+x.strokeStyle="#334155";for(let i=0;i<20;i++){const px=(i*40-t*2)%640;x.beginPath();x.moveTo(px<0?px+640:px,250);x.lineTo(px<0?px+640:px,320);x.stroke()}
+objs.forEach(o=>{o.x+=2;if(o.x>700){o.x=-80;o.bad=Math.random()<.25;o.k=Math.floor(Math.random()*3)}
+const X=o.x,Y=o.y;x.fillStyle=o.bad?"#f87171":vi;x.beginPath();
+if(o.k==0)x.rect(X,Y,50,40);else if(o.k==1)x.arc(X+25,Y+20,22,0,7);else{x.moveTo(X+25,Y);x.lineTo(X+50,Y+40);x.lineTo(X,Y+40)}x.fill();
+const col=o.bad?"#ef4444":cy;x.strokeStyle=col;x.lineWidth=2;x.strokeRect(X-8,Y-8,66,56);x.fillStyle=col;x.fillRect(X-8,Y-26,o.bad?96:84,18);x.fillStyle="#001";x.font="12px monospace";
+x.fillText((o.bad?"DEFECT ":["BOX ","BALL ","CONE "][o.k])+(90+(o.x%9)|0)+"%",X-4,Y-12)});
+x.strokeStyle=cy;x.globalAlpha=.5;const sy=100+Math.abs(Math.sin(t/40))*150;x.beginPath();x.moveTo(0,sy);x.lineTo(640,sy);x.stroke();x.globalAlpha=1;x.lineWidth=1});
+// 2 navigation
+const G=32,R=20,C=Math.floor(640/20),Rw=20;
+const wall=new Set();for(let r=3;r<17;r++){if(r!=9)wall.add(10+","+r)}for(let c=18;c<26;c++)wall.add(c+",12");for(let c=3;c<8;c++)wall.add(c+",6");for(let r=2;r<8;r++)wall.add("22,"+r);
+let rob={x:2,y:2},goal={x:29,y:17},path=[],pf=0;
+function bfs(){const q=[[rob.x|0,rob.y|0]],pr={},s=(rob.x|0)+","+(rob.y|0);pr[s]=null;
+while(q.length){const [a,b]=q.shift();if(a==goal.x&&b==goal.y)break;for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const n=a+dx,m=b+dy,k=n+","+m;if(n<0||m<0||n>=32||m>=20||wall.has(k)||k in pr)continue;pr[k]=a+","+b;q.push([n,m])}}
+path=[];let k=goal.x+","+goal.y;if(!(k in pr))return;while(k){const [a,b]=k.split(",").map(Number);path.unshift({x:a,y:b});k=pr[k]}}
+bfs();
+const c2=clip("c2",(x,t)=>{x.fillStyle=dark;x.fillRect(0,0,640,400);x.strokeStyle="#111b33";for(let i=0;i<=32;i++){x.beginPath();x.moveTo(i*20,0);x.lineTo(i*20,400);x.stroke()}for(let i=0;i<=20;i++){x.beginPath();x.moveTo(0,i*20);x.lineTo(640,i*20);x.stroke()}
+x.fillStyle="#334155";wall.forEach(k=>{const [a,b]=k.split(",").map(Number);x.fillRect(a*20+1,b*20+1,18,18)});
+if(path.length>1){x.strokeStyle=vi;x.lineWidth=3;x.setLineDash([6,5]);x.beginPath();path.forEach((p,i)=>i?x.lineTo(p.x*20+10,p.y*20+10):x.moveTo(p.x*20+10,p.y*20+10));x.stroke();x.setLineDash([]);
+const n=path[1],dx=n.x-rob.x,dy=n.y-rob.y,d=Math.hypot(dx,dy);if(d<.1){rob.x=n.x;rob.y=n.y;path.shift()}else{rob.x+=dx/d*.12;rob.y+=dy/d*.12}}
+x.fillStyle="#ffb454";x.beginPath();x.arc(goal.x*20+10,goal.y*20+10,8+Math.sin(t/8)*2,0,7);x.fill();
+const rx=rob.x*20+10,ry=rob.y*20+10;x.strokeStyle=cy;x.globalAlpha=.25;x.lineWidth=1;for(let a=0;a<12;a++){const an=a/12*6.28+t/30;x.beginPath();x.moveTo(rx,ry);x.lineTo(rx+Math.cos(an)*60,ry+Math.sin(an)*60);x.stroke()}x.globalAlpha=1;
+x.fillStyle=cy;x.beginPath();x.arc(rx,ry,9,0,7);x.fill();x.fillStyle="#001";x.fillRect(rx-3,ry-3,6,6);x.lineWidth=1});
+c2.addEventListener("pointerdown",e=>{const r=c2.getBoundingClientRect(),gx=Math.floor((e.clientX-r.left)/r.width*32),gy=Math.floor((e.clientY-r.top)/r.height*20);if(!wall.has(gx+","+gy)){goal={x:gx,y:gy};rob.x=Math.round(rob.x);rob.y=Math.round(rob.y);bfs()}});
+// 3 arm
+let mx=null;
+const c3=clip("c3",(x,t)=>{x.fillStyle=dark;x.fillRect(0,0,640,400);x.fillStyle="#1e293b";x.fillRect(0,360,640,40);
+const bx=320,by=360,L1=140,L2=120;let tx=320+Math.cos(t/50)*150,ty=200+Math.sin(t/35)*50;if(mx){tx=mx.x;ty=mx.y}
+let d=Math.min(Math.hypot(tx-bx,ty-by),L1+L2-1);const ang=Math.atan2(ty-by,tx-bx),a1=ang-Math.acos((L1*L1+d*d-L2*L2)/(2*L1*d));
+const ex=bx+Math.cos(a1)*L1,ey=by+Math.sin(a1)*L1,hx=bx+Math.cos(ang)*d,hy=by+Math.sin(ang)*d;
+x.strokeStyle=vi;x.lineWidth=14;x.lineCap="round";x.beginPath();x.moveTo(bx,by);x.lineTo(ex,ey);x.stroke();
+x.strokeStyle=cy;x.lineWidth=10;x.beginPath();x.moveTo(ex,ey);x.lineTo(hx,hy);x.stroke();
+x.fillStyle="#fff";[[bx,by],[ex,ey]].forEach(p=>{x.beginPath();x.arc(p[0],p[1],8,0,7);x.fill()});
+const g=8+Math.sin(t/10)*3;x.strokeStyle="#ffb454";x.lineWidth=4;x.beginPath();x.moveTo(hx,hy);x.lineTo(hx+Math.cos(ang-.5)*18+g*0,hy+Math.sin(ang-.5)*18-g);x.moveTo(hx,hy);x.lineTo(hx+Math.cos(ang+.5)*18,hy+Math.sin(ang+.5)*18+g);x.stroke();
+x.strokeStyle="#ffb454";x.lineWidth=1.5;x.beginPath();x.arc(tx,ty,14,0,7);x.moveTo(tx-20,ty);x.lineTo(tx+20,ty);x.moveTo(tx,ty-20);x.lineTo(tx,ty+20);x.stroke();
+x.fillStyle=cy;x.font="13px monospace";x.fillText("θ1 "+(a1*57.3|0)+"°  θ2 "+(((ang-a1)*57.3)|0)+"°",16,28);x.lineWidth=1});
+c3.addEventListener("pointermove",e=>{const r=c3.getBoundingClientRect();mx={x:(e.clientX-r.left)/r.width*640,y:(e.clientY-r.top)/r.height*400}});
+c3.addEventListener("pointerleave",()=>mx=null);
+document.getElementById("f").onsubmit=async e=>{e.preventDefault();const f=e.target,ok=document.getElementById("ok"),b=f.querySelector("button");
+const em=f.elements[1].value.trim();if(!f.elements[0].value.trim()||!em||f.elements[2].value.trim().length<10){ok.style.color="#b3261e";ok.textContent="Please fill in your name, a valid email and a message of at least 10 characters.";return}
+b.disabled=true;ok.style.color="var(--a)";ok.textContent="Sending your request...";
+const r=await window.NanviContact.send({name:f.elements[0].value,email:em,subject:"Home page enquiry",message:f.elements[2].value,website:f.elements[4]?f.elements[4].value:""});
+b.disabled=false;ok.style.color=r.success?"var(--a)":"#b3261e";ok.textContent=r.success?"Thank you! The Nanvi team will contact you soon.":r.message;if(r.success)f.reset()};
+</script>
+<script src="site.js?v=20261105d"></script>
+</body>
+</html>

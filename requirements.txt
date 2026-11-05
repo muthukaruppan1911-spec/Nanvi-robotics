@@ -1,0 +1,4 @@
+# Nanvi Robotics - Python dependencies
+# server.py uses only the Python standard library (json, os, datetime, http.server),
+# so there is nothing to install. This file is intentionally empty of packages.
+# Add a package here only if you add one to the project (for example: flask==3.0.3).
